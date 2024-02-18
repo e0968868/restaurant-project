@@ -41,8 +41,11 @@ for d in data:
                     "Event Id": event_data["event_id"],
                     "Restaurant Id": r["restaurant"]["R"].get("res_id", ""),
                     "Restaurant Name": r["restaurant"].get("name", ""),
-                    "Photo URL": event_data["photos"][0]["photo"]["url"],
-                    "Event Title": event_data["title"],
+
+                    # initially obtained IndexError: list index out of range
+                    # so must also handle cases where "photos" key not present
+                    "Photo URL": event_data["photos"][0]["photo"]["url"] if event_data["photos"] else "",
+                    "Event Title": event_data["title"], 
 
                     # use friendly dates for easier readability; e.g. 06 March instead of 2019-03-06
                     "Event Start Date": event_data["friendly_start_date"],
