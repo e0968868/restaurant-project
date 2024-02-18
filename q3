@@ -22,9 +22,30 @@ for d in data:
             # each tuple contains an aggregate and its corresponding text
             ratings_info.append((aggregate_rating, rating_text))
 
-# convert list of tuples to dataframe
-df_ratings = pd.DataFrame(ratings_info, columns=["Aggregate Rating", "Rating Text"])
+# only return tuples with the specified rating text
+def check_rating_text(tuples, rating_text):
+    t = []
+    for x in tuples:
+        if x[1] == rating_text:
+            t.append(x)
+    return t
 
-# df of aggregates with their corresponding rating texts
-print(df_ratings)
+# for each tuple for each rating text, find the minimum aggregate rating
+def calculate_threshold(t):
+    min_agg = None
+    for x in t:
+        agg = x[0]
+        # find minimum aggregate for a particular rating
+        if min_agg is None or agg < min_agg:
+            min_agg = agg
+    return min_agg
 
+# calculate thresholds for each of the required ratings
+thresholds = {}
+for rating in required_ratings:
+    t = check_rating_text(ratings_info, rating)
+    thresholds[rating] = calculate_threshold(t)
+
+# print thresholds for each of the required ratings
+for rating, threshold in thresholds.items():
+    print(f"{rating}: {threshold}")
