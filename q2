@@ -37,14 +37,15 @@ for d in data:
             if april(event_data["start_date"], event_data["end_date"]):
                 
                 # append info to restaurant_events list
+                # populate null values with "NA"
                 restaurant_events.append({
                     "Event Id": event_data["event_id"],
-                    "Restaurant Id": r["restaurant"]["R"].get("res_id", ""),
-                    "Restaurant Name": r["restaurant"].get("name", ""),
+                    "Restaurant Id": r["restaurant"]["R"].get("res_id", "NA"),
+                    "Restaurant Name": r["restaurant"].get("name", "NA"),
 
                     # initially obtained IndexError: list index out of range
                     # so must also handle cases where "photos" key not present
-                    "Photo URL": event_data["photos"][0]["photo"]["url"] if event_data["photos"] else "",
+                    "Photo URL": event_data["photos"][0]["photo"]["url"] if event_data["photos"] else "NA",
                     "Event Title": event_data["title"], 
 
                     # use friendly dates for easier readability; e.g. 06 March instead of 2019-03-06
