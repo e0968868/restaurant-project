@@ -62,5 +62,17 @@ for d in data:
             "Country": country_name
         })
 
+# csv file name
+csv = 'restaurants.csv'
+
+# convert list to dataframe
+df = pd.DataFrame(restaurant_info)
+ 
+# convert dataframe to csv file
+df.to_csv(csv)
+
+# for debugging purpose; check if code has been run successfully
+print(f'Data written')
+
 
 
