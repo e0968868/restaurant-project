@@ -57,7 +57,7 @@ csv = 'restaurant_events.csv'
 
 # convert list to dataframe
 df = pd.DataFrame(restaurant_events)
-
+ 
 # convert dataframe to csv file
 df.to_csv(csv)
 
