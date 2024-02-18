@@ -32,3 +32,35 @@ path = "/Users/Amber/Downloads/restaurant_data.json"
 with open(path, 'r', encoding='utf-8') as json_file: 
     data = json.load(json_file)
 
+# create empty list to append info
+restaurant_info = []
+
+# intiially obtained 20 restaurants only by iterating through only the first dictionary
+# thus, added this line to iterate through every dictionary, after realizing there are multiple dictionaries in the main list
+for d in data:  
+    restaurants_list = d.get("restaurants", [])
+    for r in restaurants_list:
+        res_id = r["restaurant"]["R"].get("res_id", "")
+        name = r["restaurant"].get("name", "") 
+        city = r["restaurant"]["location"].get("city", "")
+        user_rating_votes = r["restaurant"]["user_rating"].get("votes", "")
+        user_aggregate_rating = r["restaurant"]["user_rating"].get("aggregate_rating", "")
+        cuisines = r["restaurant"].get("cuisines", "")
+        
+        # map country id to country name using above defined function
+        country_id = r["restaurant"]["location"].get("country_id", "")
+        country_name = country_mapping.get(country_id, "")
+
+        # append to restaurant_info empty list
+        restaurant_info.append({
+            "Restaurant ID": res_id,
+            "Restaurant Name": name,
+            "City": city,
+            "User Rating Votes": user_rating_votes,
+            "User Aggregate Rating": user_aggregate_rating,
+            "Cuisines": cuisines,
+            "Country": country_name
+        })
+
+
+
