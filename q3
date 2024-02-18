@@ -6,15 +6,25 @@ path = "/Users/Amber/Downloads/restaurant_data.json"
 with open(path, 'r', encoding='utf-8') as json_file:
     data = json.load(json_file)
 
-# data exploration to see the different kinds of rating texts
-ratings = []
+# create list of ratings that need to be included, based on question requirements
+required_ratings = ["Excellent", "Very Good", "Good", "Average", "Poor"]
+
+# create empty list to append info
+ratings_info = []
+
+# iterate through each dictionary 
 for d in data:
     restaurants_list = d.get("restaurants", [])
     for r in restaurants_list:
-        rating_text = r["restaurant"]["user_rating"].get("rating_text")
-        if rating_text not in ratings:
-            ratings.append(rating_text)
+        aggregate_rating = r["restaurant"]["user_rating"].get("aggregate_rating", "")
+        rating_text = r["restaurant"]["user_rating"].get("rating_text", "")
+        if rating_text in required_ratings:
+            # each tuple contains an aggregate and its corresponding text
+            ratings_info.append((aggregate_rating, rating_text))
 
-# print the rating texts
-for rating in ratings:
-    print(rating)
+# convert list of tuples to dataframe
+df_ratings = pd.DataFrame(ratings_info, columns=["Aggregate Rating", "Rating Text"])
+
+# df of aggregates with their corresponding rating texts
+print(df_ratings)
+
