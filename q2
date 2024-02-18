@@ -6,8 +6,11 @@ import json
 
 # set local path
 path = "/Users/Amber/Downloads/restaurant_data.json"
-json_file = open(path)
-data = pd.read_json(json_file) 
+
+# tried to read json using pd.read_json but structure changed resulting in issue.
+# hence, used json.load 
+with open(path, 'r', encoding='utf-8') as json_file: 
+    data = json.load(json_file)
 
 # function to check if event occurs in Apr 2019
 def april(start_date, end_date):
