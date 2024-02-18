@@ -1,0 +1,20 @@
+import json
+
+# set local path
+path = "/Users/Amber/Downloads/restaurant_data.json"
+
+with open(path, 'r', encoding='utf-8') as json_file:
+    data = json.load(json_file)
+
+# data exploration to see the different kinds of rating texts
+ratings = []
+for d in data:
+    restaurants_list = d.get("restaurants", [])
+    for r in restaurants_list:
+        rating_text = r["restaurant"]["user_rating"].get("rating_text")
+        if rating_text not in ratings:
+            ratings.append(rating_text)
+
+# print the rating texts
+for rating in ratings:
+    print(rating)
